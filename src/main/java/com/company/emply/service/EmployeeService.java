@@ -1,5 +1,6 @@
 package com.company.emply.service;
 
+import com.company.emply.exception.NotFoundException;
 import com.company.emply.model.Employees;
 import com.company.emply.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -21,7 +23,13 @@ public class EmployeeService {
     }
     public  Employees getEmployeesById(int id)
     {
-        return employeeRepository.findById(id).get();
+        //return employeeRepository.findById(id).get();
+        Optional<Employees> optionalEmployees = employeeRepository.findById(id);
+
+        if(!optionalEmployees.isPresent())
+            throw new NotFoundException("Customer Record is not available...");
+
+        return optionalEmployees.get();
     }
     public void saveOrUpdate(Employees employees){
         employeeRepository.save(employees);
