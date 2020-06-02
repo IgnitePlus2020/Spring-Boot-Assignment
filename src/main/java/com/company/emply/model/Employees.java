@@ -1,5 +1,6 @@
 package com.company.emply.model;
 
+
 import javax.persistence.*;
 
 @Entity
